@@ -1,0 +1,60 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="bar_app.product_form">
+            <field name="name">Product form</field>
+
+            <field name="model">bar_app.product_model</field>
+
+            <field name="arch" type="xml">
+
+                <form>
+                    <sheet>
+                        <group name="father_group">
+                            <group name="left_group">
+                                <h2 style="color:#ff5733;">Principal Data</h2>
+                                <field name="photo" widget="image" style="width: 120px;hight: 120px;" />
+                                <field name="name" />
+                                <field name="price" />
+                            </group>
+                            <group name="right_group">
+                                <h2 style="color:#e38773;">Extra Data</h2>
+                                <field name="description" />
+                                <field name="category" />
+                                <field name="ingredients">
+                                    <tree>
+                                        <field name="name"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+
+            </field>
+        </record>
+        <record model="ir.ui.view" id="bar_app.product_model_list">
+            <field name="name">Products List</field>
+
+            <field name="model">bar_app.product_model</field>
+
+            <field name="arch" type="xml">
+
+                <tree>
+
+                    <field name="name" />
+
+                    <field name="price" />
+
+                    <field name="category" />
+
+                </tree>
+
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="bar_app.action_window_products_list">
+            <field name="name">Product list</field>
+            <field name="res_model">bar_app.product_model</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>
