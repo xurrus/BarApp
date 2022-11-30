@@ -1,0 +1,47 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="bar_app.line_form">
+            <field name="name">New line</field>
+
+            <field name="model">bar_app.line_model</field>
+
+            <field name="arch" type="xml">
+
+                <form>
+                    <sheet>
+                        <group name="father_group">
+                            <group name="left_group">
+                                <field name="product_id"/>
+                                <field name="order_id" />
+                            </group>
+                            <group name="right_group">
+                                <field name="quantity"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="bar_app.order_line_tree">
+            <field name="name">Lines</field>
+
+            <field name="model">bar_app.line_model</field>
+
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="product_id" />
+                    <field name="order_id" />
+                    <field name="quantity" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="bar_app.action_window_lines_list">
+            <field name="name">Lines</field>
+            <field name="res_model">bar_app.line_model</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>

@@ -5,3 +5,7 @@ access_bar_app_category_model,bar_app.category_model,model_bar_app_category_mode
 access_bar_app_product_model,bar_app.product_model,model_bar_app_product_model,base.group_user,1,1,1,1
 
 access_bar_app_ingredient_model,bar_app.ingredient_model,model_bar_app_ingredient_model,base.group_user,1,1,1,1
+
+access_bar_app_order_model,bar_app.order_model,model_bar_app_order_model,base.group_user,1,1,1,1
+
+access_bar_app_line_model,bar_app.line_model,model_bar_app_line_model,base.group_user,1,1,1,1

@@ -1,0 +1,58 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="bar_app.order_form">
+            <field name="name">New order</field>
+
+            <field name="model">bar_app.order_model</field>
+
+            <field name="arch" type="xml">
+
+                <form>
+                    <sheet>
+                        <group name="father_group">
+                            <group name="left_group">
+                                <h2 style="color:#ff5733;">
+                                    <field name="table" />
+                                </h2>
+                                <field name="active" />
+                                <field name="client" />
+                                <field name="waiter" />
+                                <field name="date" />
+                                <field name="lines">
+                                    <tree>
+                                        <field name="order_id" />
+                                        <field name="product_id" />
+                                        <field name="quantity" />
+                                    </tree>
+                                </field>
+                                <field name="price" />
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="bar_app.order_model_tree">
+            <field name="name">Orders</field>
+
+            <field name="model">bar_app.order_model</field>
+
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="table" />
+                    <field name="active" />
+                    <field name="lines" />
+                    <field name="price" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="bar_app.action_window_order_list">
+            <field name="name">Orders</field>
+            <field name="res_model">bar_app.order_model</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>

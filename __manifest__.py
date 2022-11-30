@@ -27,6 +27,8 @@
         'views/ingredient_view.xml',
         'views/category_view.xml',
         'views/product_view.xml',
+        'views/order_view.xml',
+        'views/line_view.xml',
         'views/menu.xml',
     ],
     # only loaded in demonstration mode
