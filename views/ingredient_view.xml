@@ -1,10 +1,9 @@
 <odoo>
     <data>
+
         <record model="ir.ui.view" id="bar_app.ingredient_form">
             <field name="name">Ingredient form</field>
-
             <field name="model">bar_app.ingredient_model</field>
-
             <field name="arch" type="xml">
 
                 <form>
@@ -21,31 +20,66 @@
                         </group>
                     </sheet>
                 </form>
-
             </field>
         </record>
+
         <record model="ir.ui.view" id="bar_app.ingredient_model_tree">
             <field name="name">Ingredients List</field>
+            <field name="model">bar_app.ingredient_model</field>
+            <field name="arch" type="xml">
+
+                <tree>
+                    <field name="name"/>
+                    <field name="typeI"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="bar_app.ingredient_model_kanban">
+            <field name="name">Ingredients</field>
+            <field name="model">bar_app.ingredient_model</field>
+            <field name="arch" type="xml">
+                <kanban class="o_res_partner_kanban">
+                    <field name="name" />
+                    <field name="typeI" />
+                    <field name="observations" />
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                                <div class="oe_kanban_details">
+                                    <strong>
+                                        <field name="name"/>  <!--<field name="typeI" class="oe_inline"/>-->
+                                    </strong>
+                                    <div t-if="record.observations.value">
+                                        <t t-esc="record.observations.value" />
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="bar_app.ingredient_graph">
+            <field name="name">Ingredient Graph</field>
 
             <field name="model">bar_app.ingredient_model</field>
 
             <field name="arch" type="xml">
 
-                <tree>
-
-                    <field name="name"/>
-
-                    <field name="typeI"/>
-
-
-                </tree>
+                <graph type="bar">
+                    <field name="name" type="row" />
+                    <field name="numProducts" type="measure" />
+                </graph>
 
             </field>
         </record>
+
         <record model="ir.actions.act_window" id="bar_app.action_window_ingredients_list">
             <field name="name">Ingredients list</field>
             <field name="res_model">bar_app.ingredient_model</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">tree,form,kanban,graph</field>
         </record>
     </data>
 </odoo>

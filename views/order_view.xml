@@ -1,13 +1,16 @@
 <odoo>
     <data>
+
         <record model="ir.ui.view" id="bar_app.order_form">
             <field name="name">New order</field>
-
             <field name="model">bar_app.order_model</field>
-
             <field name="arch" type="xml">
 
                 <form>
+                    <!--<header>
+                        <button name="confirmTable" type="object" string="Confirm" class="oe_highlight" states="D"/>         
+                        <field name="state" widget="statusbar"></field>
+                      </header>-->
                     <sheet>
                         <group name="father_group">
                             <group name="left_group">
@@ -30,16 +33,14 @@
                         </group>
                     </sheet>
                 </form>
-
             </field>
         </record>
 
         <record model="ir.ui.view" id="bar_app.order_model_tree">
             <field name="name">Orders</field>
-
             <field name="model">bar_app.order_model</field>
-
             <field name="arch" type="xml">
+
                 <tree>
                     <field name="table" />
                     <field name="active" />
@@ -49,10 +50,65 @@
             </field>
         </record>
 
+        <record model="ir.ui.view" id="bar_app.order_model_kanban">
+            <field name="name">Orders</field>
+            <field name="model">bar_app.order_model</field>
+            <field name="arch" type="xml">
+                <kanban class="o_res_partner_kanban">
+                    <field name="table" />
+                    <field name="price" />
+                    <field name="active" />
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                                <div class="oe_kanban_details">
+                                    <strong>
+                                        <field name="table"/>  <field name="price" class="oe_inline"/>€
+                                    </strong>
+                                    <p> <field name="active"/> </p>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="bar_app.order_model_calendar">
+            <field name="name">Orders Calendar</field>
+
+            <field name="model">bar_app.order_model</field>
+
+            <field name="arch" type="xml">
+
+                <calendar date_start="date" color="numLines" mode="month">
+                    <field name="table"/>
+                    <field name="price"/>
+                    <field name="active"/>
+                </calendar>
+
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="bar_app.order_graph">
+            <field name="name">Order Graph</field>
+
+            <field name="model">bar_app.order_model</field>
+
+            <field name="arch" type="xml">
+
+                <graph type="bar">
+                    <field name="table" type="row" />
+                    <field name="numLines" type="measure" />
+                </graph>
+
+            </field>
+        </record>
+
         <record model="ir.actions.act_window" id="bar_app.action_window_order_list">
             <field name="name">Orders</field>
             <field name="res_model">bar_app.order_model</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">tree,form,kanban,calendar,graph</field>
         </record>
     </data>
 </odoo>

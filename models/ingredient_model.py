@@ -13,8 +13,13 @@ class IngredientModel(models.Model):
     typeI = fields.Selection([ ('Fats and oils','Fats and oils'),('Eggs or Milk','Eggs or Milk'),('Fruits','Fruits'),('Vegetables','Vegetables'),('Grain, nuts','Grain, nuts'),('Herbs and spices','Herbs and spices'),('Meat','Meat'),('Fish','Fish'),('Pasta','Pasta'),('Others','Others'),],string='Type of ingredient')
     observations = fields.Text(string="Observations", help="Additional description for the ingredient")
     products = fields.Many2many("bar_app.product_model",string="Products with this ingredient",relation="bar_app_products2ingredients")
+    numProducts = fields.Integer(string="Number of products",help="Number of products with this ingredient",compute="_totalProducts",store=True)
 
     @api.constrains("name")
     def _nameLength(self):
         if len(self.name) < 3:
             raise ValidationError("The length of the ingredient name must have 3 characters")
+
+    @api.depends("products")
+    def _totalProducts(self):
+        self.numProducts = len(self.products)

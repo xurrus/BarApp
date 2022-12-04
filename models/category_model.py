@@ -11,9 +11,14 @@ class CategoryModel(models.Model):
 
     name = fields.Char(string="Name",help="Name of the category",requiered=True,index=True)
     products = fields.One2many("bar_app.product_model","category",string="List of products")
+    numProducts = fields.Integer(string="Number of products",help="Number of products in this category",compute="_totalProducts",store=True)
         
 
     @api.constrains("name")
     def _nameLength(self):
         if len(self.name) < 5:
             raise ValidationError("The length of the category name must have 5 characters")
+
+    @api.depends("products")
+    def _totalProducts(self):
+        self.numProducts = len(self.products)

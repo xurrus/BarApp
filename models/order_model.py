@@ -17,12 +17,17 @@ class OrderModel(models.Model):
     price = fields.Float(string="Price €",compute="_calculatePrice")
     date = fields.Date(string="Date",required=True,default=datetime.now(),help="Date")
     lines = fields.One2many("bar_app.line_model","order_id",string="Lines of products")
+    numLines = fields.Integer(string="Number of lines",help="Number of lines in this order",compute="_totalLines",store=True)
 
     @api.depends("lines.product_id","lines.quantity")
     def _calculatePrice(self):
         self.price = 0
         for linea in self.lines:
             self.price += linea.product_id.price*linea.quantity
+
+    @api.depends("lines")
+    def _totalLines(self):
+        self.numLines = len(self.lines)
 
 
     
