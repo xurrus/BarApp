@@ -205,14 +205,14 @@ class barApp(http.Controller):
             domain = [("id","=",Orderid)]
         else:
             domain = []
-        taskdata = http.request.env["bar_app.order_model"].sudo().search_read(domain,["table","client","waiter","price","lines"])
+        taskdata = http.request.env["bar_app.order_model"].sudo().search_read(domain,["table","client","active","waiter","price","lines"])
         data = { "status":200, "data":taskdata}
         return http.Response(json.dumps(data).encode("utf8"),mimetype="application/json")
 
     #GET all orders
     @http.route('/bar_app/getOrders',auth="public",type="http")
     def getOrders(self,**kw):
-        taskdata = http.request.env["bar_app.order_model"].sudo().search_read([],["table","client","waiter","price","lines"])
+        taskdata = http.request.env["bar_app.order_model"].sudo().search_read([],["table","client","active","waiter","price","lines"])
         data = { "status":200, "data":taskdata}
         return http.Response(json.dumps(data).encode("utf8"),mimetype="application/json")
 
