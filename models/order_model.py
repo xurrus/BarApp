@@ -11,7 +11,7 @@ class OrderModel(models.Model):
     _rec_name = 'table'
 
     table = fields.Char(string="Table",help="Table of the order",requiered=True,index=True)
-    active = fields.Boolean(string="Is active",help="Is the order active?")
+    active = fields.Boolean(string="Is active",help="Is the order active?",default=True)
     client = fields.Char(string="Client",help="Client of the order",requiered=True)
     waiter = fields.Char(string="Waiter",help="Waiter of the order")
     price = fields.Float(string="Price €",compute="_calculatePrice")
