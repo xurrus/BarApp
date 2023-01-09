@@ -28,9 +28,7 @@
             <field name="arch" type="xml">
 
                 <tree>
-                    <field name="product_id" />
-                    <field name="order_id" />
-                    <field name="quantity" />
+                    <field name="fullName" />
                 </tree>
             </field>
         </record>
