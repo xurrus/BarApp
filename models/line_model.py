@@ -14,4 +14,4 @@ class LineModel(models.Model):
      @api.depends('order_id', 'product_id')
      def _compute_fields_combination(self):
           for rec in self:
-               rec.fullName = str(rec.order_id.table) + ' : ' + str(rec.product_id.name)
+               rec.fullName = str(rec.order_id.table) + ' : '+ str(rec.quantity) + " de " + str(rec.product_id.name)
