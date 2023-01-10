@@ -21,9 +21,10 @@ class OrderModel(models.Model):
 
     @api.depends("lines.product_id","lines.quantity")
     def _calculatePrice(self):
-        self.price = 0
-        for linea in self.lines:
-            self.price += linea.product_id.price*linea.quantity
+        for rec in self:
+            rec.price = 0
+            for linea in rec.lines:
+                rec.price += linea.product_id.price*linea.quantity
 
     @api.depends("lines")
     def _totalLines(self):
