@@ -9,6 +9,7 @@
         <menuitem name="Ingredients" id="bar_app.menu_ingredients" parent="bar_app.menu_root" />
         <menuitem name="Orders" id="bar_app.menu_orders" parent="bar_app.menu_root" />/>
         <menuitem name="Lines" id="bar_app.menu_lines" parent="bar_app.menu_root" />/>
+        <menuitem name="Invoices" id="bar_app.menu_invoices" parent="bar_app.menu_root" />/>
 
         <!-- actions -->
         <menuitem name="List categories" id="bar_app.menu_categories_list" parent="bar_app.menu_category" action="bar_app.action_window_categories_list" />
@@ -16,5 +17,6 @@
         <menuitem name="List ingredients" id="bar_app.menu_ingredients_list" parent="bar_app.menu_ingredients" action="bar_app.action_window_ingredients_list" />
         <menuitem name="List orders" id="bar_app.menu_order_list" parent="bar_app.menu_orders" action="bar_app.action_window_order_list" />
         <menuitem name="List lines" id="bar_app.menu_lines_list" parent="bar_app.menu_lines" action="bar_app.action_window_lines_list" />
+        <menuitem name="List invoices" id="bar_app.menu_invoices_list" parent="bar_app.menu_invoices" action="bar_app.action_window_invoices_list" />
     </data>
 </odoo>

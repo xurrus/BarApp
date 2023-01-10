@@ -1,0 +1,97 @@
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="bar_app.invoice_form">
+            <field name="name">Invoice form</field>
+            <field name="model">bar_app.invoice_model</field>
+            <field name="arch" type="xml">
+
+                <form>
+                    <sheet>
+                        <group name="father_group">
+                            <group name="left_group">
+                                <h2 style="color:#ff5733;">Invoice wording</h2>
+                                <field name="ref"/>
+                                <field name="client"/>
+                                <field name="lines">
+                                    <tree>
+                                        <field name="fullName"/>
+                                    </tree>
+                                </field>
+                                <field name="creationDate"/>
+                            </group>
+                            <group name="right_group">
+                                <h2 style="color:#fe0433;">Amount</h2>
+                                <field name="base"/>
+                                <field name="vat"/>
+                                <field name="total"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="bar_app.invoice_model_tree">
+            <field name="name">Invoice List</field>
+            <field name="model">bar_app.invoice_model</field>
+            <field name="arch" type="xml">
+
+                <tree>
+                    <field name="ref" />
+                    <field name="client" />
+                    <field name="vat" />
+                    <field name="total" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="bar_app.invoice_model_kanban">
+            <field name="name">Invoices</field>
+            <field name="model">bar_app.invoice_model</field>
+            <field name="arch" type="xml">
+                <kanban class="o_res_partner_kanban">
+                    <field name="ref" />
+                    <field name="client" />
+                    <field name="total" />
+                    <field name="creationDate" />
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                                <div class="oe_kanban_details">
+                                    <strong>
+                                        <field name="ref" /> : <field name="total" class="oe_inline"/>€
+                                    </strong>
+                                    <p><field name="client"/></p>
+                                    <p><i><field name="vat"/>%</i></p>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="bar_app.invoice_graph">
+            <field name="name">Invoice Graph</field>
+
+            <field name="model">bar_app.invoice_model</field>
+
+            <field name="arch" type="xml">
+
+                <graph type="bar">
+                    <field name="ref" type="row" />
+                    <field name="total" type="measure" />
+                </graph>
+
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="bar_app.action_window_invoices_list">
+            <field name="name">Invoices List</field>
+            <field name="res_model">bar_app.invoice_model</field>
+            <field name="view_mode">tree,form,kanban,graph</field>
+        </record>
+
+    </data>
+</odoo>
