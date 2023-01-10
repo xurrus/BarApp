@@ -66,6 +66,7 @@
                                     <div t-if="record.description.value">
                                         <t t-esc="record.description.value" />
                                     </div>
+                                    <p><i><field name="category"/></i></p>
                                 </div>
                             </div>
                         </t>
