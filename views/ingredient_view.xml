@@ -15,7 +15,7 @@
                                 <field name="observations" />
                             </group>
                             <group name="right_group">
-                                <fielfd name="typeI"/>
+                                <field name="typeI"/>
                                 <field name="products">
                                     <tree>
                                         <field name="name" />
