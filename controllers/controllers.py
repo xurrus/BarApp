@@ -15,14 +15,14 @@ class barApp(http.Controller):
             domain = [("id","=",catid)]
         else:
             domain = []
-        taskdata = http.request.env["bar_app.category_model"].sudo().search_read(domain,["name","products"])
+        taskdata = http.request.env["bar_app.category_model"].sudo().search_read(domain,["name","full_name","products","parent_id"])
         data = { "status":200, "data":taskdata}
         return http.Response(json.dumps(data).encode("utf8"),mimetype="application/json")
 
     #GET all categories
     @http.route('/bar_app/getCategories',auth="public",type="http")
     def getCategories(self,**kw):
-        taskdata = http.request.env["bar_app.category_model"].sudo().search_read([],["name","products"])
+        taskdata = http.request.env["bar_app.category_model"].sudo().search_read([],["name","full_name","products","parent_id"])
         data = { "status":200, "data":taskdata}
         return http.Response(json.dumps(data).encode("utf8"),mimetype="application/json")
 
@@ -32,7 +32,7 @@ class barApp(http.Controller):
         response = request.jsonrequest
         try:
             result = http.request.env["bar_app.category_model"].sudo().create(response)
-            data = {  "status":201, "id":result.id  }
+            data = {  "status":201, "id":result.id, "full_name":result.full_name  }
             return data
         except Exception as e:
             data = { "status":404, "error":e}
@@ -47,7 +47,7 @@ class barApp(http.Controller):
             cat = http.request.env["bar_app.category_model"].sudo().search(domain)
             updated = cat.sudo().write(response)
             if (updated):
-                data = {  "status":200, "result":cat.id }
+                data = {  "status":200, "result":cat.id, "full_name":cat.full_name }
             else:
                 data = { "status":400, "result":"Category not modified"}
             return data
