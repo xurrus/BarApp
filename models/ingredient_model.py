@@ -14,6 +14,7 @@ class IngredientModel(models.Model):
     observations = fields.Text(string="Observations", help="Additional description for the ingredient")
     products = fields.Many2many("bar_app.product_model",string="Products with this ingredient",relation="bar_app_products2ingredients")
     numProducts = fields.Integer(string="Number of products",help="Number of products with this ingredient",compute="_totalProducts",store=True)
+    photo = fields.Binary()
 
     @api.constrains("name")
     def _nameLength(self):
