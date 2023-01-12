@@ -7,24 +7,24 @@
             <field name="arch" type="xml">
 
                 <form>
+                    <header>
+                        <button name="confirmInvoice" type="object" string="Confirm" class="oe_highlight" confirm="Are you sure you want to finish the invoice? It will close it!"></button>
+                        <field name="state" widget="statusbar"/>
+                    </header>
                     <sheet>
                         <group name="father_group">
                             <group name="left_group">
                                 <h2 style="color:#ff5733;">Invoice wording</h2>
-                                <field name="ref"/>
-                                <field name="client"/>
-                                <field name="lines">
-                                    <tree>
-                                        <field name="fullName"/>
-                                    </tree>
-                                </field>
-                                <field name="creationDate"/>
+                                <field name="ref" readonly='True'/>
+                                <field name="client" attrs="{'readonly': [('state','=', 'C')]}"/>
+                                <field name="order" attrs="{'readonly': [('state','=', 'C')]}"/>
+                                <field name="creationDate" attrs="{'readonly': [('state','=', 'C')]}"/>
                             </group>
                             <group name="right_group">
                                 <h2 style="color:#fe0433;">Amount</h2>
-                                <field name="base"/>
+                                <field name="base" readonly='True'/>
                                 <field name="vat"/>
-                                <field name="total"/>
+                                <field name="total" readonly='True'/>
                             </group>
                         </group>
                     </sheet>
@@ -87,10 +87,26 @@
             </field>
         </record>
 
+        <record model="ir.ui.view" id="bar_app.invoice_model_calendar">
+            <field name="name">Invoices Calendar</field>
+
+            <field name="model">bar_app.invoice_model</field>
+
+            <field name="arch" type="xml">
+
+                <calendar date_start="creationDate" color="client" mode="month">
+                    <field name="ref"/>
+                    <field name="total"/>
+                    <field name="vat"/>
+                </calendar>
+
+            </field>
+        </record>
+
         <record model="ir.actions.act_window" id="bar_app.action_window_invoices_list">
             <field name="name">Invoices List</field>
             <field name="res_model">bar_app.invoice_model</field>
-            <field name="view_mode">tree,form,kanban,graph</field>
+            <field name="view_mode">tree,form,kanban,graph,calendar</field>
         </record>
 
     </data>
