@@ -10,10 +10,10 @@ class OrderModel(models.Model):
                         ]
     _rec_name = 'table'
 
-    table = fields.Char(string="Table",help="Table of the order",requiered=True,index=True)
-    active = fields.Boolean(string="Is active",help="Is the order active?",default=True)
-    client = fields.Char(string="Client",help="Client of the order",requiered=True)
-    waiter = fields.Char(string="Waiter",help="Waiter of the order")
+    table = fields.Char(string="Table",help="Table of the order",required=True,index=True)
+    state = fields.Selection([('A','Active'),('C','Confirmed'),],string="State",help="Is the order active yet?",defalut='A')
+    client = fields.Char(string="Client",help="Client of the order",required=True)
+    waiter = fields.Char(string="Waiter",help="Waiter of the order",compute="_computeUser")
     price = fields.Float(string="Price €",compute="_calculatePrice")
     date = fields.Date(string="Date",required=True,default=datetime.now(),help="Date")
     lines = fields.One2many("bar_app.line_model","order_id",string="Lines of products")
@@ -30,5 +30,13 @@ class OrderModel(models.Model):
     def _totalLines(self):
         self.numLines = len(self.lines)
 
+    def changeState(self):
+        if self.state == 'C':
+            self.state = 'A'
+        else:
+            self.state = 'C'
 
-    
+    @api.depends('client')
+    def _computeUser(self):
+        for rec in self:
+            rec.waiter = self.env.user.name

@@ -7,28 +7,32 @@
             <field name="arch" type="xml">
 
                 <form>
-                    <!--<header>
-                        <button name="confirmTable" type="object" string="Confirm" class="oe_highlight" states="D"/>         
-                        <field name="state" widget="statusbar"></field>
-                      </header>-->
+                    <header>
+                        <button name="changeState" type="object" string="Confirm" class="oe_highlight" confirm="Are you sure you want to finish the order? It will close it!" attrs="{'invisible': [('state','=', 'C')]}"></button>
+                        <field name="state" widget="statusbar"/>
+                    </header>
                     <sheet>
                         <group name="father_group">
                             <group name="left_group">
                                 <h2 style="color:#ff5733;">
-                                    <field name="table" />
+                                    <field name="table"  attrs="{'readonly': [('state','=', 'C')]}"/>
                                 </h2>
-                                <field name="active" />
-                                <field name="client" />
-                                <field name="waiter" />
-                                <field name="date" />
-                                <field name="lines">
+                                <field name="client"  attrs="{'readonly': [('state','=', 'C')]}"/>
+                                <field name="waiter"  attrs="{'readonly': [('state','=', 'C')]}"/>
+                                <field name="date"  attrs="{'readonly': [('state','=', 'C')]}"/>
+                                <field name="lines"  attrs="{'readonly': [('state','=', 'C')]}">
+                                    <form>
+                                        <group>
+                                            <field name="product_id"/>
+                                            <field name="quantity"/>
+                                        </group>
+                                    </form>
                                     <tree>
-                                        <field name="order_id" />
                                         <field name="product_id" />
                                         <field name="quantity" />
                                     </tree>
                                 </field>
-                                <field name="price" />
+                                <field name="price" readonly='True'/>
                             </group>
                         </group>
                     </sheet>
@@ -43,7 +47,7 @@
 
                 <tree>
                     <field name="table" />
-                    <field name="active" />
+                    <field name="state" />
                     <field name="lines" />
                     <field name="price" />
                 </tree>
@@ -57,7 +61,7 @@
                 <kanban class="o_res_partner_kanban">
                     <field name="table" />
                     <field name="price" />
-                    <field name="active" />
+                    <field name="state" />
                     <templates>
                         <t t-name="kanban-box">
                             <div t-attf-class="oe_kanban_global_click">
@@ -65,7 +69,7 @@
                                     <strong>
                                         <field name="table"/>  <field name="price" class="oe_inline"/>€
                                     </strong>
-                                    <p> <field name="active"/> </p>
+                                    <p> <field name="state"/> </p>
                                 </div>
                             </div>
                         </t>
@@ -84,7 +88,7 @@
                 <calendar date_start="date" color="numLines" mode="month">
                     <field name="table"/>
                     <field name="price"/>
-                    <field name="active"/>
+                    <field name="state"/>
                 </calendar>
 
             </field>
