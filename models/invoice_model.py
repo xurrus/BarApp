@@ -6,20 +6,23 @@ class ProductModel(models.Model):
     _name = 'bar_app.invoice_model'
     _description = 'This is the invoice model'
     _order = 'ref'
+    _rec_name = 'ref'
 
     ref = fields.Integer(string="Invoice number",index=True,default = lambda self : self._computeRefIncrement())
     client = fields.Char(string="Client",help="Client name",requiered=True)
-    order = fields.Many2one("bar_app.order_model",string="Order")
+    lines = fields.One2many("bar_app.line_invoice_model", "refId" , string="Lines", requiered=True)
     base = fields.Float(string="Base price €",compute="_computeBase",help="Price of the invoice without VAT")
-    vat = fields.Selection([ ('0','0'),('4','4'),('11','11'),('21','21'),],string='VAT',help="VAT number % to add to base price")
+    vat = fields.Selection([ ('0','0'),('4','4'),('10','10'),('21','21'),],string='VAT',help="VAT number % to add to base price",default='21')
     total = fields.Float(string="Total price €",help="Final price including VAT",compute="_computeTotal")
     creationDate = fields.Datetime(string="Creation date",default=lambda self: datetime.today())
     state = fields.Selection([('A','Active'),('C','Confirmed'),],string="State",help="Is the invoice active yet?",defalut='A')
 
-    @api.depends('order','order.lines.product_id','order.lines.quantity')
+    @api.depends('lines','lines.product','lines.quantity')
     def _computeBase(self):
         for rec in self:
-            rec.base = rec.order.price
+            rec.base = 0
+            for l in rec.lines:
+                rec.base += l.product.price*l.quantity
 
     @api.depends('base','vat')
     def _computeTotal(self):
