@@ -9,8 +9,8 @@ class ProductModel(models.Model):
     _rec_name = 'ref'
 
     ref = fields.Integer(string="Invoice number",index=True,default = lambda self : self._computeRefIncrement())
-    client = fields.Char(string="Client",help="Client name",requiered=True)
-    lines = fields.One2many("bar_app.line_invoice_model", "refId" , string="Lines", requiered=True)
+    client = fields.Char(string="Client",help="Client name",required=True)
+    lines = fields.One2many("bar_app.line_invoice_model", "refId" , string="Lines")
     base = fields.Float(string="Base price €",compute="_computeBase",help="Price of the invoice without VAT")
     vat = fields.Selection([ ('0','0'),('4','4'),('10','10'),('21','21'),],string='VAT',help="VAT number % to add to base price",default='21')
     total = fields.Float(string="Total price €",help="Final price including VAT",compute="_computeTotal")

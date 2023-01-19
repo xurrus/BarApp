@@ -34,7 +34,19 @@ class OrderModel(models.Model):
         if self.state == 'C':
             self.state = 'A'
         else:
+            #CAMBIAMOS EL ESTADO
             self.state = 'C'
+            #CREAMOS INVOICE SOLO CON CLIENTE
+            invoice = {}
+            invoice["client"] = self.client
+            newInvoice = self.env["bar_app.invoice_model"].sudo().create(invoice)
+            #CREAMOS LINES INVOICE
+            for linea in self.lines:
+                lineinvoice = {}
+                lineinvoice["refId"] = newInvoice.id
+                lineinvoice["quantity"] = linea.quantity
+                lineinvoice["product"] = linea.product_id.id
+                self.env["bar_app.line_invoice_model"].sudo().create(lineinvoice)
 
     @api.depends('client')
     def _computeUser(self):

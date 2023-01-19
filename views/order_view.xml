@@ -8,7 +8,7 @@
 
                 <form>
                     <header>
-                        <button name="changeState" type="object" string="Confirm" class="oe_highlight" confirm="Are you sure you want to finish the order? It will close it!" attrs="{'invisible': [('state','=', 'C')]}"></button>
+                        <button name="changeState" type="object" string="Confirm" class="oe_highlight" confirm="Are you sure you want to finish the order? It will close it!"></button>
                         <field name="state" widget="statusbar"/>
                     </header>
                     <sheet>
