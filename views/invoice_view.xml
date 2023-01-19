@@ -35,7 +35,7 @@
                             <group name="right_group">
                                 <h2 style="color:#fe0433;">Amount</h2>
                                 <field name="base" readonly='True'/>
-                                <field name="vat"/>
+                                <field name="vat" attrs="{'readonly': [('state','=', 'C')]}"/>
                                 <field name="total" readonly='True'/>
                             </group>
                         </group>
