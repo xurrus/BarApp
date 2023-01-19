@@ -11,7 +11,7 @@ class OrderModel(models.Model):
     _rec_name = 'table'
 
     table = fields.Char(string="Table",help="Table of the order",required=True,index=True)
-    state = fields.Selection([('A','Active'),('C','Confirmed'),],string="State",help="Is the order active yet?",defalut='A')
+    state = fields.Selection([('A','Active'),('C','Confirmed'),],string="State",help="Is the order active yet?",default='A')
     client = fields.Char(string="Client",help="Client of the order",required=True)
     waiter = fields.Char(string="Waiter",help="Waiter of the order",compute="_computeUser")
     price = fields.Float(string="Price €",compute="_calculatePrice")
@@ -47,6 +47,8 @@ class OrderModel(models.Model):
                 lineinvoice["quantity"] = linea.quantity
                 lineinvoice["product"] = linea.product_id.id
                 self.env["bar_app.line_invoice_model"].sudo().create(lineinvoice)
+
+            return self.state
 
     @api.depends('client')
     def _computeUser(self):

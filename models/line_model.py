@@ -6,7 +6,7 @@ class LineModel(models.Model):
      _description = 'Line Model'
      _rec_name = 'fullName'
 
-     order_id = fields.Many2one("bar_app.order_model",string="Order",help="Order reference")
+     order_id = fields.Many2one("bar_app.order_model",string="Order",help="Order reference",required=True)
      product_id =fields.Many2one("bar_app.product_model",string="Product", help="Product name",required=True)
      quantity = fields.Integer(string="Quantity",required=True,default=1,help="Quantity for this line")
      fullName = fields.Char(string='Full Name', compute='_compute_fields_combination')
