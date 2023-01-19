@@ -158,7 +158,7 @@ class barApp(http.Controller):
         response = request.jsonrequest
         try:
             result = http.request.env["bar_app.line_model"].sudo().create(response)
-            data = {  "status":201, "id":result.id  }
+            data = {  "status":201, "id":result.id, "full_name":result.fullName}
             return data
         except Exception as e:
             data = { "status":404, "error":e}
@@ -173,7 +173,7 @@ class barApp(http.Controller):
             line = http.request.env["bar_app.line_model"].sudo().search(domain)
             updated = line.sudo().write(response)
             if (updated):
-                data = {  "status":200, "result":line.id }
+                data = {  "status":200, "result":line.id ,"full_name":line.fullName}
             else:
                 data = { "status":400, "result":"Line not modified"}
             return data
@@ -205,14 +205,18 @@ class barApp(http.Controller):
             domain = [("id","=",Orderid)]
         else:
             domain = []
-        taskdata = http.request.env["bar_app.order_model"].sudo().search_read(domain,["table","client","active","waiter","price","lines"])
+        taskdata = http.request.env["bar_app.order_model"].sudo().search_read(domain,["table","client","state","waiter","price","lines","date"])
+        for t in taskdata:
+            t['date'] = t['date'].isoformat()
         data = { "status":200, "data":taskdata}
         return http.Response(json.dumps(data).encode("utf8"),mimetype="application/json")
 
     #GET all orders
     @http.route('/bar_app/getOrders',auth="public",type="http")
     def getOrders(self,**kw):
-        taskdata = http.request.env["bar_app.order_model"].sudo().search_read([],["table","client","active","waiter","price","lines"])
+        taskdata = http.request.env["bar_app.order_model"].sudo().search_read([],["table","client","state","waiter","price","lines","date"])
+        for t in taskdata:
+            t['date'] = t['date'].isoformat()
         data = { "status":200, "data":taskdata}
         return http.Response(json.dumps(data).encode("utf8"),mimetype="application/json")
 
@@ -322,3 +326,70 @@ class barApp(http.Controller):
             data = { "status":404, "error":e}
             return data
 
+    #############################################################
+    ####################### INVOICE MODEL #######################
+    #############################################################
+    #GET one invoice by id
+    @http.route('/bar_app/getInvoice/<int:catid>',auth="public",type="http")
+    def getInvoice(self,catid=None,**kw):
+        if catid:
+            domain = [("id","=",catid)]
+        else:
+            domain = []
+        taskdata = http.request.env["bar_app.invoice_model"].sudo().search_read(domain,["ref","client","lines","base","vat","total","creationDate","state"])
+        for t in taskdata:
+            t['creationDate'] = t['creationDate'].isoformat()
+        data = { "status":200, "data":taskdata}
+        return http.Response(json.dumps(data).encode("utf8"),mimetype="application/json")
+
+    #GET all invoice
+    @http.route('/bar_app/getInvoices',auth="public",type="http")
+    def getInvoices(self,**kw):
+        taskdata = http.request.env["bar_app.invoice_model"].sudo().search_read([],["ref","client","lines","base","vat","total","creationDate","state"])
+        for t in taskdata:
+            t['creationDate'] = t['creationDate'].isoformat()
+        data = { "status":200, "data":taskdata}
+        return http.Response(json.dumps(data).encode("utf8"),mimetype="application/json")
+
+    #UPDATE one invoice
+    @http.route('/bar_app/updateInvoice',auth="public",type="json",method="PUT")
+    def updateInvoice(self,**kw):
+        response = request.jsonrequest
+        domain = [("id","=",response["id"])]
+        try:
+            cat = http.request.env["bar_app.invoice_model"].sudo().search(domain)
+            updated = cat.sudo().write(response)
+            if (updated):
+                data = {  "status":200, "result":cat.id }
+            else:
+                data = { "status":400, "result":"Invoice not modified"}
+            return data
+        except Exception as e:
+            data = { "status":404, "error":e}
+            return data
+
+    #DELETE A invoice
+    @http.route('/bar_app/deleteInvoice',auth="public",type="json",method="DELETE")
+    def deleteInvoice(self,**kw):
+        response = request.jsonrequest
+        domain = [("id","=",response["id"])]
+        try:
+            cat = http.request.env["bar_app.invoice_model"].sudo().search(domain).unlink()
+            data = {  "status":200, "result":"Invoice deleted" }
+            return data
+        except Exception as e:
+            data = { "status":404, "error":e}
+            return data
+
+    #############################################################
+    ################ INVOICE AUTOMATIC CREATION #################
+    #############################################################
+    @http.route('/bar_app/confirmOrder/<int:catid>',auth="public",type="http")
+    def confirmOrder(self,catid=None,**kw):
+        if catid:
+            domain = [("id","=",catid)]
+        else:
+            domain = []
+        order = http.request.env["bar_app.order_model"].sudo().search(domain)
+        data = { "status":200, "stateOrder":order.changeState()}
+        return http.Response(json.dumps(data).encode("utf8"),mimetype="application/json")
