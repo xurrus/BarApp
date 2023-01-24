@@ -31,6 +31,8 @@
         'views/line_view.xml',
         'views/invoice_view.xml',
         'views/line_invoice_view.xml',
+        'report/invoice_pdf.xml',
+        'report/report3.xml',
         'views/menu.xml',
     ],
     # only loaded in demonstration mode

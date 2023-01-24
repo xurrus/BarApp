@@ -38,4 +38,4 @@ class ProductModel(models.Model):
                 return 1
 
     def confirmInvoice(self):
-        self.state = 'C'
+        self.state = 'C' 
