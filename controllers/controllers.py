@@ -19,12 +19,32 @@ class barApp(http.Controller):
         data = { "status":200, "data":taskdata}
         return http.Response(json.dumps(data).encode("utf8"),mimetype="application/json")
 
+    #GET categories hijos by id del padre
+    @http.route('/bar_app/getChildrenCategories/<int:catid>',auth="public",type="http")
+    def getChildrenCategories(self,catid=None,**kw):
+        if catid:
+            domain = [("parent_id","=",catid)]
+        else:
+            domain = []
+        taskdata = http.request.env["bar_app.category_model"].sudo().search_read(domain,["name","full_name","products","parent_id"])
+        data = { "status":200, "data":taskdata}
+        return http.Response(json.dumps(data).encode("utf8"),mimetype="application/json")
+
+    #GET all categories
+    @http.route('/bar_app/getFatherCategories',auth="public",type="http")
+    def getFatherCategories(self,**kw):
+        domain = [("parent_id","=",None)]
+        taskdata = http.request.env["bar_app.category_model"].sudo().search_read(domain,["name","full_name","products","parent_id"])
+        data = { "status":200, "data":taskdata}
+        return http.Response(json.dumps(data).encode("utf8"),mimetype="application/json")
+
     #GET all categories
     @http.route('/bar_app/getCategories',auth="public",type="http")
     def getCategories(self,**kw):
         taskdata = http.request.env["bar_app.category_model"].sudo().search_read([],["name","full_name","products","parent_id"])
         data = { "status":200, "data":taskdata}
         return http.Response(json.dumps(data).encode("utf8"),mimetype="application/json")
+
 
     #POST one category
     @http.route('/bar_app/addCategory',auth="public",type="json",method="POST")
