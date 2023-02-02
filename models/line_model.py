@@ -10,6 +10,7 @@ class LineModel(models.Model):
      product_id =fields.Many2one("bar_app.product_model",string="Product", help="Product name",required=True)
      quantity = fields.Integer(string="Quantity",required=True,default=1,help="Quantity for this line")
      fullName = fields.Char(string='Full Name', compute='_compute_fields_combination')
+     observations = fields.Text(string="Observations",help="Observations of this line")
 
      @api.depends('order_id', 'product_id')
      def _compute_fields_combination(self):

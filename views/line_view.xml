@@ -15,6 +15,7 @@
                             </group>
                             <group name="right_group">
                                 <field name="quantity"/>
+                                <field name="observations"/>
                             </group>
                         </group>
                     </sheet>
@@ -29,6 +30,7 @@
 
                 <tree>
                     <field name="fullName" />
+                    <field name="observations" />
                 </tree>
             </field>
         </record>

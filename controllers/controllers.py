@@ -161,14 +161,14 @@ class barApp(http.Controller):
             domain = [("id","=",Lineid)]
         else:
             domain = []
-        taskdata = http.request.env["bar_app.line_model"].sudo().search_read(domain,["order_id","product_id","quantity","fullName"])
+        taskdata = http.request.env["bar_app.line_model"].sudo().search_read(domain,["order_id","product_id","quantity","fullName","observations"])
         data = { "status":200, "data":taskdata}
         return http.Response(json.dumps(data).encode("utf8"),mimetype="application/json")
 
     #GET all lines
     @http.route('/bar_app/getLines',auth="public",type="http")
     def getLines(self,**kw):
-        taskdata = http.request.env["bar_app.line_model"].sudo().search_read([],["order_id","product_id","quantity","fullName"])
+        taskdata = http.request.env["bar_app.line_model"].sudo().search_read([],["order_id","product_id","quantity","fullName","observations"])
         data = { "status":200, "data":taskdata}
         return http.Response(json.dumps(data).encode("utf8"),mimetype="application/json")
 
