@@ -1,7 +1,7 @@
  <odoo>
     <data>
         <!-- Top menu item -->
-        <menuitem name="Bar App" id="bar_app.menu_root" />
+        <menuitem name="Bar App" id="bar_app.menu_root" web_icon="bar_app,static/description/icon.png"/>
 
         <!-- menu categorbar -->
         <menuitem name="Categories" id="bar_app.menu_category" parent="bar_app.menu_root" />
