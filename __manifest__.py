@@ -23,6 +23,7 @@
 
     # always loaded
     'data': [
+        'security/bar_app_security.xml',
         'security/ir.model.access.csv',
         'views/ingredient_view.xml',
         'views/category_view.xml',
