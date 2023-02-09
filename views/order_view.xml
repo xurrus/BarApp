@@ -113,6 +113,7 @@
             <field name="name">Orders</field>
             <field name="res_model">bar_app.order_model</field>
             <field name="view_mode">tree,form,kanban,calendar,graph</field>
+            <!--<field name="domain">[('state','=','A'),('state','=','C')]</field>-->
         </record>
     </data>
 </odoo>

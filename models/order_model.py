@@ -12,7 +12,7 @@ class OrderModel(models.Model):
 
     table = fields.Char(string="Table",help="Table of the order",required=True,index=True)
     state = fields.Selection([('A','Active'),('C','Confirmed'),],string="State",help="Is the order active yet?",default='A')
-    client = fields.Char(string="Client",help="Client of the order",required=True)
+    client = fields.Char(string="Client",help="Client of the order",required=True,compute="_computeClient")
     waiter = fields.Char(string="Waiter",help="Waiter of the order",compute="_computeUser")
     price = fields.Float(string="Price €",compute="_calculatePrice")
     date = fields.Date(string="Date",required=True,default=datetime.now(),help="Date")
@@ -54,3 +54,8 @@ class OrderModel(models.Model):
     def _computeUser(self):
         for rec in self:
             rec.waiter = self.env.user.name
+
+    @api.depends('table')
+    def _computeClient(self):
+        for rec in self:
+            rec.client = "Mesa "+str(rec.table)

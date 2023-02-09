@@ -17,6 +17,7 @@ class CategoryModel(models.Model):
     photo = fields.Binary(string="Image")
     parent_id = fields.Many2one("bar_app.category_model",string="Category parent",index=True,ondelete='cascade')
     numProducts = fields.Integer(string="Number of products",help="Number of products in this category",compute="_totalProducts",store=True)
+    location = fields.Selection([('B','Barman'),('K','Kitchen'),],string="Destination for the products",help="Where the products go",default='K')
         
 
     @api.constrains("name")

@@ -60,6 +60,18 @@
             </field>
         </record>
 
+        <record model="ir.ui.view" id="bar_app.line_model_filter">
+            <field name="name">Lines filters</field>
+            <field name="model">bar_app.line_model</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="product_id"/>
+                    <field name="quantity"/>
+                    <filter string="Not confirmed" name="NotConfirmed" domain="[('order_id.state','=','A')]"/>
+                </search>
+            </field>
+        </record>
+
         <record model="ir.actions.act_window" id="bar_app.action_window_lines_list">
             <field name="name">Lines</field>
             <field name="res_model">bar_app.line_model</field>

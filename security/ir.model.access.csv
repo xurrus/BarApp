@@ -3,27 +3,34 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_category_model_waiter,bar_app.category_model,model_bar_app_category_model,bar_group_waiter,1,0,0,0
 access_category_model_adminn,bar_app.category_model,model_bar_app_category_model,bar_group_admin,1,1,1,1
 access_category_model_cooker,bar_app.category_model,model_bar_app_category_model,bar_group_cooker,1,0,0,0
+access_category_model_barman,bar_app.category_model,model_bar_app_category_model,bar_group_barman,1,0,0,0
 
-access_ingredient_model_waiter,bar_app.ingredient_model,model_bar_app_ingredient_model,bar_group_waiter,1,0,1,0
+access_ingredient_model_waiter,bar_app.ingredient_model,model_bar_app_ingredient_model,bar_group_waiter,1,0,0,0
 access_ingredient_model_adminn,bar_app.ingredient_model,model_bar_app_ingredient_model,bar_group_admin,1,1,1,1
-access_ingredient_model_cooker,bar_app.ingredient_model,model_bar_app_ingredient_model,bar_group_cooker,1,1,1,1
+access_ingredient_model_cooker,bar_app.ingredient_model,model_bar_app_ingredient_model,bar_group_cooker,1,0,0,0
+access_ingredient_model_barman,bar_app.ingredient_model,model_bar_app_ingredient_model,bar_group_barman,0,0,0,0
 
 access_product_model_waiter,bar_app.product_model,model_bar_app_product_model,bar_group_waiter,1,0,0,0
 access_product_model_adminn,bar_app.product_model,model_bar_app_product_model,bar_group_admin,1,1,1,1
-access_product_model_cooker,bar_app.product_model,model_bar_app_product_model,bar_group_cooker,1,1,1,1
+access_product_model_cooker,bar_app.product_model,model_bar_app_product_model,bar_group_cooker,1,0,0,0
+access_product_model_barman,bar_app.product_model,model_bar_app_product_model,bar_group_barman,1,0,0,0
 
 access_order_model_waiter,bar_app.order_model,model_bar_app_order_model,bar_group_waiter,1,1,1,1
 access_order_model_adminn,bar_app.order_model,model_bar_app_order_model,bar_group_admin,1,1,1,1
 access_order_model_cooker,bar_app.order_model,model_bar_app_order_model,bar_group_cooker,1,0,0,0
+access_order_model_barman,bar_app.order_model,model_bar_app_order_model,bar_group_barman,1,0,0,0
 
 access_line_model_waiter,bar_app.line_model,model_bar_app_line_model,bar_group_waiter,1,1,1,1
 access_line_model_adminn,bar_app.line_model,model_bar_app_line_model,bar_group_admin,1,1,1,1
-access_line_model_cooker,bar_app.line_model,model_bar_app_line_model,bar_group_cooker,1,1,1,1
+access_line_model_cooker,bar_app.line_model,model_bar_app_line_model,bar_group_cooker,1,1,0,0
+access_line_model_barman,bar_app.line_model,model_bar_app_line_model,bar_group_barman,1,1,0,0
 
-access_invoice_model_waiter,bar_app.invoice_model,model_bar_app_invoice_model,bar_group_waiter,1,0,1,0
+access_invoice_model_waiter,bar_app.invoice_model,model_bar_app_invoice_model,bar_group_waiter,1,1,1,0
 access_invoice_model_adminn,bar_app.invoice_model,model_bar_app_invoice_model,bar_group_admin,1,1,1,1
 access_invoice_model_cooker,bar_app.invoice_model,model_bar_app_invoice_model,bar_group_cooker,0,0,0,0
+access_invoice_model_barman,bar_app.invoice_model,model_bar_app_invoice_model,bar_group_barman,0,0,0,0
 
 access_line_invoice_model_waiter,bar_app.line_invoice_model,model_bar_app_line_invoice_model,bar_group_waiter,1,0,1,0
-access_line_invoice_model_adminn,bar_app.line_invoice_model,model_bar_app_line_invoice_model,bar_group_admin,1,1,1,1
+access_line_invoice_model_adminn,bar_app.line_invoice_model,model_bar_app_line_invoice_model,bar_group_admin,1,1,1,0
 access_line_invoice_model_cooker,bar_app.line_invoice_model,model_bar_app_line_invoice_model,bar_group_cooker,0,0,0,0
+access_line_invoice_model_barman,bar_app.line_invoice_model,model_bar_app_line_invoice_model,bar_group_barman,0,0,0,0

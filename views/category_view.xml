@@ -21,6 +21,7 @@
                                         <field name="price"/>
                                     </tree>
                                 </field>
+                                <field name="location"/>
                             </group>
                         </group>
                     </sheet>

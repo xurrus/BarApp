@@ -3,20 +3,30 @@
         <!-- Top menu item -->
         <menuitem name="Bar App" id="bar_app.menu_root" web_icon="bar_app,static/description/icon.png"/>
 
-        <!-- menu categorbar -->
-        <menuitem name="Categories" id="bar_app.menu_category" parent="bar_app.menu_root" />
+        <!-- menus -->
+        <menuitem name="Categories" id="bar_app.menu_category" parent="bar_app.menu_root"/>
         <menuitem name="Products" id="bar_app.menu_products" parent="bar_app.menu_root" />
         <menuitem name="Ingredients" id="bar_app.menu_ingredients" parent="bar_app.menu_root" />
         <menuitem name="Orders" id="bar_app.menu_orders" parent="bar_app.menu_root" />
+        <menuitem name="Lines" id="bar_app.menu_lines" parent="bar_app.menu_root" />
         <menuitem name="Invoices" id="bar_app.menu_invoices" parent="bar_app.menu_root" />
 
         <!-- actions -->
-        <menuitem name="List categories" id="bar_app.menu_categories_list" parent="bar_app.menu_category" action="bar_app.action_window_categories_list" />
-        <menuitem name="List products" id="bar_app.menu_products_list" parent="bar_app.menu_products" action="bar_app.action_window_products_list" />
-        <menuitem name="List ingredients" id="bar_app.menu_ingredients_list" parent="bar_app.menu_ingredients" action="bar_app.action_window_ingredients_list" />
-        <menuitem name="List orders" id="bar_app.menu_order_list" parent="bar_app.menu_orders" action="bar_app.action_window_order_list" />
-        <menuitem name="List lines" id="bar_app.menu_lines_list" parent="bar_app.menu_orders" action="bar_app.action_window_lines_list" />
-        <menuitem name="List invoices" id="bar_app.menu_invoices_list" parent="bar_app.menu_invoices" action="bar_app.action_window_invoices_list" />
-        <menuitem name="List line invoices" id="bar_app.menu_line_invoices_list" parent="bar_app.menu_invoices" action="bar_app.action_window_line_invoice_list" />
+        <menuitem name="List categories" id="bar_app.menu_categories_list" parent="bar_app.menu_category" action="bar_app.action_window_categories_list" groups="bar_group_admin,bar_group_waiter,bar_group_cooker,bar_group_barman"/>
+        
+        <menuitem name="List products" id="bar_app.menu_products_list" parent="bar_app.menu_products" action="bar_app.action_window_products_list" groups="bar_group_admin,bar_group_waiter,bar_group_cooker,bar_group_barman"/>
+
+        <menuitem name="List ingredients" id="bar_app.menu_ingredients_list" parent="bar_app.menu_ingredients" action="bar_app.action_window_ingredients_list" groups="bar_group_admin,bar_group_waiter,bar_group_cooker,bar_group_barman"/>
+
+        <menuitem name="List orders" id="bar_app.menu_order_list" parent="bar_app.menu_orders" action="bar_app.action_window_order_list" groups="bar_group_admin,bar_group_waiter"/>
+
+        <menuitem name="List lines" id="bar_app.menu_lines_list" parent="bar_app.menu_lines" action="bar_app.action_window_lines_list" groups="bar_group_admin"/>
+        <menuitem name="List lines BARMAN" id="bar_app.menu_lines_list_barman" parent="bar_app.menu_lines" action="bar_app.action_window_lines_list_barman" groups="bar_group_barman,bar_group_admin"/>
+        <menuitem name="List lines WAITER" id="bar_app.menu_lines_list_waiter" parent="bar_app.menu_lines" action="bar_app.action_window_lines_list_waiter" groups="bar_group_waiter,bar_group_admin"/>
+        <menuitem name="List lines COOKER" id="bar_app.menu_lines_list_cooker" parent="bar_app.menu_lines" action="bar_app.action_window_lines_list_cooker" groups="bar_group_cooker,bar_group_admin"/>
+
+        <menuitem name="List invoices" id="bar_app.menu_invoices_list" parent="bar_app.menu_invoices" action="bar_app.action_window_invoices_list" groups="bar_group_admin"/>
+        <menuitem name="List line invoices" id="bar_app.menu_line_invoices_list" parent="bar_app.menu_invoices" action="bar_app.action_window_line_invoice_list" groups="bar_group_admin"/>
+
     </data>
 </odoo>

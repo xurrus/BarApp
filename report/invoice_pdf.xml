@@ -1,33 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
-    <template id="report_invoice">
+    <!-- <template id="report_invoice">
         <t t-call="web.html_container">
-            <t t-foreach="docs" t-as="doc">
+            <t
+    t-foreach="docs" t-as="doc">
                 <t t-call="web.external_layout">
-                    <h2>ORDER INVOICE</h2>
+                    <h2>ORDER
+    INVOICE</h2>
                     <p>Ref: <t t-esc="doc.ref" /></p>
-                    <p>Client: <t t-esc="doc.client" /></p>
+                    <p>Client:
+    <t t-esc="doc.client" /></p>
                     <p>Lines:</p>
-                    <table style="border:2px solid black;border-collapse:collapse;
-                    margin:10px;padding:10px;">
+                    <table
+    style="border:2px solid black; margin:25px;padding:25px;">
                         <tr>
-                            <th>PRODUCT</th>
+    <th>PRODUCT</th>
                             <th>PRICE</th>
                             <th>QUANTITY</th>
-                        </tr>
+    </tr>
                         <t t-foreach="doc.lines" t-as="linea">
                             <tr>
-                                <td><t t-esc="linea.product.name" /></td>
-                                <td><t t-esc="linea.product.price" /></td>
-                                <td><t t-esc="linea.quantity" /></td>
+    <td><t t-esc="linea.product.name" /></td>
+                                <td><t
+    t-esc="linea.product.price" /></td>
+                                <td><t
+    t-esc="linea.quantity" /></td>
                             </tr>
                         </t>
-                    </table>
+    </table>
                     <p>Base: <t t-esc="doc.base" /></p>
-                    <p>VAT: <t t-esc="doc.vat" /></p>
+                    <p>VAT: <t
+    t-esc="doc.vat" /></p>
                     <p>Total €: <t t-esc="doc.total" /></p>
                 </t>
+    </t>
+        </t>
+    </template> -->
+
+    <template id="report_invoice">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+
+                <h2 style="text-align:center;">
+                    <u>ORDER INVOICE</u>
+                </h2>
+
+                <table style="text-align:center;border:2px solid black; margin:25px;padding:25px;">
+                    <tr style="background-color:#A0A0A0">
+                        <th style="margin:25px;padding:25px;">REF</th>
+                        <th style="margin:25px;padding:25px;">CLIENT</th>
+                        <th style="margin:25px;padding:25px;">BASE</th>
+                        <th style="margin:25px;padding:25px;">VAT</th>
+                        <th style="margin:25px;padding:25px;">TOTAL €</th>
+                        <!--<th style="margin:25px;padding:25px;">LINES</th>-->
+                    </tr>
+                    <t t-foreach="docs" t-as="doc">
+                        <td style="border:1px solid black;margin:25px;padding:25px;">
+                            <t t-esc="doc.ref" />
+                        </td>
+                        <td style="border:1px solid black;margin:25px;padding:25px;">
+                            <t t-esc="doc.client" />
+                        </td>
+                        <td style="border:1px solid black;margin:25px;padding:25px;">
+                            <t t-esc="doc.base" />
+                        </td>
+                        <td style="border:1px solid black;margin:25px;padding:25px;">
+                            <t t-esc="doc.vat" />
+                        </td>
+                        <td style="border:1px solid black;margin:25px;padding:25px;">
+                            <t t-esc="doc.total" />
+                        </td>
+                    </t>
+                </table>
+
+                <p>Products:</p>
+                <p> </p>
+
+                <table style="border:2px solid black; margin:25px;padding:25px;">
+                    <tr>
+                        <th style="margin:25px;padding:25px;">PRODUCT</th>
+                        <th style="margin:25px;padding:25px;">PRICE</th>
+                        <th style="margin:25px;padding:25px;">QUANTITY</th>
+                    </tr>
+                    <t t-foreach="docs" t-as="doc">
+                        <tr style="border:1px solid black;margin:25px;padding:25px;">
+                            <t t-foreach="doc.lines" t-as="linea">
+                                <t t-esc="linea.product.name" />
+                                <t t-esc="linea.product.price" />
+                                <t t-esc="linea.quantity" />
+                            </t>
+                        </tr>
+                    </t>
+                </table>
+
             </t>
         </t>
     </template>
