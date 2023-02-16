@@ -1,42 +1,9 @@
 <odoo>
     <data>
 
-        <record model="ir.ui.view" id="bar_app.line_form">
-            <field name="name">New line</field>
-            <field name="model">bar_app.line_model</field>
-            <field name="arch" type="xml">
-
-                <form>
-                    <sheet>
-                        <group name="father_group">
-                            <group name="left_group">
-                                <field name="product_id"/>
-                                <field name="order_id" />
-                            </group>
-                            <group name="right_group">
-                                <field name="quantity"/>
-                                <field name="observations"/>
-                            </group>
-                        </group>
-                    </sheet>
-                </form>
-            </field>
-        </record>
-
-        <record model="ir.ui.view" id="bar_app.line_tree">
-            <field name="name">Lines</field>
-            <field name="model">bar_app.line_model</field>
-            <field name="arch" type="xml">
-
-                <tree>
-                    <field name="fullName" />
-                    <field name="observations" />
-                </tree>
-            </field>
-        </record>
-
+        <!-- KANBAN GENERAL-->
         <record model="ir.ui.view" id="bar_app.line_model_kanban">
-            <field name="name">Lines</field>
+            <field name="name">Lines kanban</field>
             <field name="model">bar_app.line_model</field>
             <field name="arch" type="xml">
                 <kanban class="o_res_partner_kanban">
@@ -60,22 +27,193 @@
             </field>
         </record>
 
-        <record model="ir.ui.view" id="bar_app.line_model_filter">
-            <field name="name">Lines filters</field>
+
+        <!-- TREE GENERAL-->
+        <record model="ir.ui.view" id="bar_app.line_tree_base">
+            <field name="name">Lines tree</field>
             <field name="model">bar_app.line_model</field>
             <field name="arch" type="xml">
-                <search>
-                    <field name="product_id"/>
-                    <field name="quantity"/>
-                    <filter string="Not confirmed" name="NotConfirmed" domain="[('order_id.state','=','A')]"/>
-                </search>
+                <tree decoration-warning="state == 'O'" decoration-danger="state == 'D'" decoration-success="state == 'F'">
+                    <field name="fullName" />
+                    <field name="state" />
+                </tree>
             </field>
         </record>
 
-        <record model="ir.actions.act_window" id="bar_app.action_window_lines_list">
-            <field name="name">Lines</field>
-            <field name="res_model">bar_app.line_model</field>
-            <field name="view_mode">tree,form,kanban</field>
+        <!-- TREE BARMAN-->
+        <record model="ir.ui.view" id="bar_app.line_tree_barman" >
+            <field name="name">Line tree barman</field>
+            <field name="model">bar_app.line_model</field>
+            <field name="mode">primary</field>
+            <field name="inherit_id" ref="bar_app.line_tree_base"/>
+            <field name="arch" type="xml">
+              <xpath expr="//tree" position="replace">
+                <tree decoration-danger="state == 'O'">
+                    <field name="fullName" />
+                    <field name="observations" />
+                    <field name="state" />
+                    <field name="quantity" />
+                </tree>
+              </xpath>     
+            </field>
         </record>
+
+        <!-- TREE COOKER-->
+        <record model="ir.ui.view" id="bar_app.line_tree_cooker" >
+            <field name="name">Line tree cooker</field>
+            <field name="model">bar_app.line_model</field>
+            <field name="mode">primary</field>
+            <field name="inherit_id" ref="bar_app.line_tree_base"/>
+            <field name="arch" type="xml">
+              <xpath expr="//tree" position="replace">
+                <tree decoration-success="state == 'O'">
+                    <field name="fullName" />
+                    <field name="quantity" />
+                    <field name="observations" />
+                    <field name="state" />
+                </tree>
+              </xpath>     
+            </field>
+        </record>
+
+         <!-- TREE WAITER-->
+         <record model="ir.ui.view" id="bar_app.line_tree_waiter" >
+            <field name="name">Line tree waiter</field>
+            <field name="model">bar_app.line_model</field>
+            <field name="mode">primary</field>
+            <field name="inherit_id" ref="bar_app.line_tree_base"/>
+            <field name="arch" type="xml">
+              <xpath expr="//tree" position="replace">
+                <tree decoration-danger="state == 'D'">
+                    <field name="state" />
+                    <field name="fullName" />
+                    <field name="orderClient" />
+                </tree>
+              </xpath>     
+            </field>
+        </record>
+
+        <!-- FORM GENERAL-->
+        <record model="ir.ui.view" id="bar_app.line_form_base">
+            <field name="name">Line form</field>
+            <field name="model">bar_app.line_model</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group name="father_group">
+                            <group name="left_group">
+                                <field name="product_id" />
+                                <field name="order_id" />
+                                <field name="orderClient" />
+                                
+                            </group>
+                            <group name="right_group">
+                                <field name="quantity" />
+                                <field name="observations" />
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- FORM BARMAN-->
+        <record model="ir.ui.view" id="bar_app.line_form_barman" >
+            <field name="name">Line form barman</field>
+            <field name="model">bar_app.line_model</field>
+            <field name="mode">primary</field>
+            <field name="inherit_id" ref="bar_app.line_form_base"/>
+            <field name="arch" type="xml">
+              <xpath expr="//form//sheet" position="before">
+                <header>
+                    <button name="drinkToDone" type="object" string="Drink doned" class="oe_highlight" confirm="Is the drink really doned?"></button>
+                    <field name="state" widget="statusbar"/>
+                </header>
+              </xpath>     
+            </field>
+        </record>
+
+        <!-- FORM COOKER-->
+        <record model="ir.ui.view" id="bar_app.line_form_cooker" >
+            <field name="name">Line form cooker</field>
+            <field name="model">bar_app.line_model</field>
+            <field name="mode">primary</field>
+            <field name="inherit_id" ref="bar_app.line_form_base"/>
+            <field name="arch" type="xml">
+              <xpath expr="//form//sheet" position="before">
+                <header>
+                    <button name="productToDone" type="object" string="Product doned" class="oe_highlight" confirm="Is the meal really doned?"></button>
+                    <field name="state" widget="statusbar"/>
+                </header>
+              </xpath>     
+            </field>
+        </record>
+
+        <!-- FORM WAITER-->
+        <record model="ir.ui.view" id="bar_app.line_form_waiter" >
+            <field name="name">Line form waiter</field>
+            <field name="model">bar_app.line_model</field>
+            <field name="mode">primary</field>
+            <field name="inherit_id" ref="bar_app.line_form_base"/>
+            <field name="arch" type="xml">
+              <xpath expr="//form//sheet" position="before">
+                <header>
+                    <button name="productToFinished" type="object" string="Delivered" class="oe_highlight" confirm="Is the product picked up and delivered?"></button>
+                    <field name="state" widget="statusbar"/>
+                </header>
+              </xpath>     
+            </field>
+        </record>
+
+
+
+        <!-- ACTION GENERAL-->
+        <record model="ir.actions.act_window" id="bar_app.action_window_lines_list_base">
+            <field name="name">List all lines</field>
+            <field name="res_model">bar_app.line_model</field>
+            <field name="view_mode">tree</field>
+            <field name="domain">[('order_id.state','=','A')]</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('bar_app.line_tree_base')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('bar_app.line_form_base')}),
+                (0, 0, {'view_mode': 'kanban', 'view_id': ref('bar_app.line_model_kanban')})]"/>        
+        </record>
+
+        <!-- ACTION BARMAN-->
+        <record model="ir.actions.act_window" id="bar_app.action_window_lines_list_barman_1">
+            <field name="name">Barman Lines</field>
+            <field name="res_model">bar_app.line_model</field>
+            <field name="domain">[('product_id.category.location','=','B'),('state','=','O'),('order_id.state','=','A')]</field>
+            <field name="view_mode">tree</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('bar_app.line_tree_barman')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('bar_app.line_form_barman')})]"/>
+  
+        </record>
+
+        <!-- ACTION COOKER-->
+        <record model="ir.actions.act_window" id="bar_app.action_window_lines_list_cooker_1">
+            <field name="name">Cooker Lines</field>
+            <field name="res_model">bar_app.line_model</field>
+            <field name="domain">[('product_id.category.location','=','K'),('state','=','O'),('order_id.state','=','A')]</field>
+            <field name="view_mode">tree</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('bar_app.line_tree_cooker')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('bar_app.line_form_cooker')})]"/>
+  
+        </record>
+
+        <!-- ACTION WAITER-->
+        <record model="ir.actions.act_window" id="bar_app.action_window_lines_list_waiter_1">
+            <field name="name">Waiter Lines</field>
+            <field name="res_model">bar_app.line_model</field>
+            <field name="domain">[('state','=','D'),('order_id.state','=','A')]</field>
+            <field name="view_mode">tree</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('bar_app.line_tree_waiter')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('bar_app.line_form_waiter')})]"/>
+  
+        </record>
+
     </data>
 </odoo>

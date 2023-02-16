@@ -3,30 +3,51 @@
         <!-- Top menu item -->
         <menuitem name="Bar App" id="bar_app.menu_root" web_icon="bar_app,static/description/icon.png"/>
 
-        <!-- menus -->
-        <menuitem name="Categories" id="bar_app.menu_category" parent="bar_app.menu_root"/>
-        <menuitem name="Products" id="bar_app.menu_products" parent="bar_app.menu_root" />
-        <menuitem name="Ingredients" id="bar_app.menu_ingredients" parent="bar_app.menu_root" />
-        <menuitem name="Orders" id="bar_app.menu_orders" parent="bar_app.menu_root" />
-        <menuitem name="Lines" id="bar_app.menu_lines" parent="bar_app.menu_root" />
-        <menuitem name="Invoices" id="bar_app.menu_invoices" parent="bar_app.menu_root" />
+        <!-- MENUS PRINCIPALES -->
+        <menuitem name="Categories" id="bar_app.menu_category_up" parent="bar_app.menu_root"/>
+        <menuitem name="Products" id="bar_app.menu_products_up" parent="bar_app.menu_root" />
+        <menuitem name="Ingredients" id="bar_app.menu_ingredients_up" parent="bar_app.menu_root" />
+        <menuitem name="Orders" id="bar_app.menu_orders_up" parent="bar_app.menu_root" />
+        <menuitem name="Lines" id="bar_app.menu_lines_up" parent="bar_app.menu_root" />
+        <menuitem name="Invoices" id="bar_app.menu_invoices_up" parent="bar_app.menu_root" />
 
-        <!-- actions -->
-        <menuitem name="List categories" id="bar_app.menu_categories_list" parent="bar_app.menu_category" action="bar_app.action_window_categories_list" groups="bar_group_admin,bar_group_waiter,bar_group_cooker,bar_group_barman"/>
+    
+        <!-- SUBMENUS PARA LISTAR-->
+
+        <!-- las categorias, productos e ingredientes lo pueden VER todos, por si acaso quieren consultar algo en un momento dado -->
+        <menuitem name="List categories" id="bar_app.menu_categories_list_1" parent="bar_app.menu_category_up" 
+        action="bar_app.action_window_categories_list_1" groups="bar_group_admin,bar_group_waiter,bar_group_cooker,bar_group_barman"/>
         
-        <menuitem name="List products" id="bar_app.menu_products_list" parent="bar_app.menu_products" action="bar_app.action_window_products_list" groups="bar_group_admin,bar_group_waiter,bar_group_cooker,bar_group_barman"/>
+        <menuitem name="List products" id="bar_app.menu_products_list_1" parent="bar_app.menu_products_up" 
+        action="bar_app.action_window_products_list_1" groups="bar_group_admin,bar_group_waiter,bar_group_cooker,bar_group_barman"/>
 
-        <menuitem name="List ingredients" id="bar_app.menu_ingredients_list" parent="bar_app.menu_ingredients" action="bar_app.action_window_ingredients_list" groups="bar_group_admin,bar_group_waiter,bar_group_cooker,bar_group_barman"/>
+        <menuitem name="List ingredients" id="bar_app.menu_ingredients_list_1" parent="bar_app.menu_ingredients_up" 
+        action="bar_app.action_window_ingredients_list_1" groups="bar_group_admin,bar_group_waiter,bar_group_cooker,bar_group_barman"/>
 
-        <menuitem name="List orders" id="bar_app.menu_order_list" parent="bar_app.menu_orders" action="bar_app.action_window_order_list" groups="bar_group_admin,bar_group_waiter"/>
+        <!-- Las ordenes solo lo pueden ver el waiter-->
+        <menuitem name="List orders" id="bar_app.menu_order_list_1" parent="bar_app.menu_orders_up" 
+        action="bar_app.action_window_order_list_1" groups="bar_group_admin,bar_group_waiter"/>
 
-        <menuitem name="List lines" id="bar_app.menu_lines_list" parent="bar_app.menu_lines" action="bar_app.action_window_lines_list" groups="bar_group_admin"/>
-        <menuitem name="List lines BARMAN" id="bar_app.menu_lines_list_barman" parent="bar_app.menu_lines" action="bar_app.action_window_lines_list_barman" groups="bar_group_barman,bar_group_admin"/>
-        <menuitem name="List lines WAITER" id="bar_app.menu_lines_list_waiter" parent="bar_app.menu_lines" action="bar_app.action_window_lines_list_waiter" groups="bar_group_waiter,bar_group_admin"/>
-        <menuitem name="List lines COOKER" id="bar_app.menu_lines_list_cooker" parent="bar_app.menu_lines" action="bar_app.action_window_lines_list_cooker" groups="bar_group_cooker,bar_group_admin"/>
 
-        <menuitem name="List invoices" id="bar_app.menu_invoices_list" parent="bar_app.menu_invoices" action="bar_app.action_window_invoices_list" groups="bar_group_admin"/>
-        <menuitem name="List line invoices" id="bar_app.menu_line_invoices_list" parent="bar_app.menu_invoices" action="bar_app.action_window_line_invoice_list" groups="bar_group_admin"/>
+        <!-- Las lines generales solo el administrador-->
+        <menuitem name="List lines" id="bar_app.menu_lines_list_1" parent="bar_app.menu_lines_up" 
+        action="bar_app.action_window_lines_list_base" groups="bar_group_admin"/>
+        <!-- Las lines de BARMAN solo el barman-->
+        <menuitem name="List lines BARMAN" id="bar_app.menu_lines_list_barman_1" parent="bar_app.menu_lines_up" 
+        action="bar_app.action_window_lines_list_barman_1" groups="bar_group_barman,bar_group_admin"/>
+        <!-- Las lines de waiter solo el waiter-->
+        <menuitem name="List lines WAITER" id="bar_app.menu_lines_list_waiter_1" parent="bar_app.menu_lines_up" 
+        action="bar_app.action_window_lines_list_waiter_1" groups="bar_group_waiter,bar_group_admin"/>
+        <!-- Las lines de cooker solo el cooker-->
+        <menuitem name="List lines COOKER" id="bar_app.menu_lines_list_cooker_1" parent="bar_app.menu_lines_up" 
+        action="bar_app.action_window_lines_list_cooker_1" groups="bar_group_cooker,bar_group_admin"/>
+
+
+        <!-- Las facturas solo el administrador-->
+        <menuitem name="List invoices" id="bar_app.menu_invoices_list_1" parent="bar_app.menu_invoices_up" 
+        action="bar_app.action_window_invoices_list_1" groups="bar_group_admin"/>
+        <menuitem name="List line invoices" id="bar_app.menu_line_invoices_list_1" parent="bar_app.menu_invoices_up" 
+        action="bar_app.action_window_line_invoice_list_1" groups="bar_group_admin"/>
 
     </data>
 </odoo>

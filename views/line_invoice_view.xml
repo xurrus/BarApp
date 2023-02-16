@@ -1,7 +1,7 @@
 <odoo>
     <data>
         <record model="ir.ui.view" id="bar_app.line_invoice_form">
-            <field name="name">Tree Line</field>
+            <field name="name">Line invoice form</field>
 
             <field name="model">bar_app.line_invoice_model</field>
 
@@ -19,7 +19,7 @@
             </field>
         </record>
         <record model="ir.ui.view" id="bar_app.line_invoice_list">
-            <field name="name">Line List</field>
+            <field name="name">Line invoice tree</field>
 
             <field name="model">bar_app.line_invoice_model</field>
 
@@ -33,8 +33,8 @@
             </field>
         </record>
 
-        <record model="ir.actions.act_window" id="bar_app.action_window_line_invoice_list">
-            <field name="name">Tree Line</field>
+        <record model="ir.actions.act_window" id="bar_app.action_window_line_invoice_list_1">
+            <field name="name">Lines invoices list</field>
             <field name="res_model">bar_app.line_invoice_model</field>
             <field name="view_mode">tree,form</field>
         </record>

@@ -1,43 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
-    <!-- <template id="report_invoice">
-        <t t-call="web.html_container">
-            <t
-    t-foreach="docs" t-as="doc">
-                <t t-call="web.external_layout">
-                    <h2>ORDER
-    INVOICE</h2>
-                    <p>Ref: <t t-esc="doc.ref" /></p>
-                    <p>Client:
-    <t t-esc="doc.client" /></p>
-                    <p>Lines:</p>
-                    <table
-    style="border:2px solid black; margin:25px;padding:25px;">
-                        <tr>
-    <th>PRODUCT</th>
-                            <th>PRICE</th>
-                            <th>QUANTITY</th>
-    </tr>
-                        <t t-foreach="doc.lines" t-as="linea">
-                            <tr>
-    <td><t t-esc="linea.product.name" /></td>
-                                <td><t
-    t-esc="linea.product.price" /></td>
-                                <td><t
-    t-esc="linea.quantity" /></td>
-                            </tr>
-                        </t>
-    </table>
-                    <p>Base: <t t-esc="doc.base" /></p>
-                    <p>VAT: <t
-    t-esc="doc.vat" /></p>
-                    <p>Total €: <t t-esc="doc.total" /></p>
-                </t>
-    </t>
-        </t>
-    </template> -->
-
     <template id="report_invoice">
         <t t-call="web.html_container">
             <t t-call="web.external_layout">

@@ -31,8 +31,8 @@
             </field>
         </record>
 
-        <record model="ir.ui.view" id="bar_app.product_model_list">
-            <field name="name">Products List</field>
+        <record model="ir.ui.view" id="bar_app.product_tree">
+            <field name="name">Products tree</field>
             <field name="model">bar_app.product_model</field>
             <field name="arch" type="xml">
 
@@ -45,7 +45,7 @@
         </record>
 
         <record model="ir.ui.view" id="bar_app.product_model_kanban">
-            <field name="name">Products</field>
+            <field name="name">Products kanban</field>
             <field name="model">bar_app.product_model</field>
             <field name="arch" type="xml">
                 <kanban class="o_res_partner_kanban">
@@ -75,8 +75,8 @@
             </field>
         </record>
 
-        <record model="ir.actions.act_window" id="bar_app.action_window_products_list">
-            <field name="name">Product list</field>
+        <record model="ir.actions.act_window" id="bar_app.action_window_products_list_1">
+            <field name="name">Products list</field>
             <field name="res_model">bar_app.product_model</field>
             <field name="view_mode">kanban,tree,form</field>
         </record>

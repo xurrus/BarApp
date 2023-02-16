@@ -28,8 +28,8 @@
             </field>
         </record>
 
-        <record model="ir.ui.view" id="bar_app.ingredient_model_tree">
-            <field name="name">Ingredients List</field>
+        <record model="ir.ui.view" id="bar_app.ingredient_tree">
+            <field name="name">Ingredients tree</field>
             <field name="model">bar_app.ingredient_model</field>
             <field name="arch" type="xml">
 
@@ -41,7 +41,7 @@
         </record>
 
         <record model="ir.ui.view" id="bar_app.ingredient_model_kanban">
-            <field name="name">Ingredients</field>
+            <field name="name">Ingredients kanban</field>
             <field name="model">bar_app.ingredient_model</field>
             <field name="arch" type="xml">
                 <kanban class="o_res_partner_kanban">
@@ -85,7 +85,7 @@
             </field>
         </record>
 
-        <record model="ir.actions.act_window" id="bar_app.action_window_ingredients_list">
+        <record model="ir.actions.act_window" id="bar_app.action_window_ingredients_list_1">
             <field name="name">Ingredients list</field>
             <field name="res_model">bar_app.ingredient_model</field>
             <field name="view_mode">tree,form,kanban,graph</field>

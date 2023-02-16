@@ -11,13 +11,14 @@ class OrderModel(models.Model):
     _rec_name = 'table'
 
     table = fields.Char(string="Table",help="Table of the order",required=True,index=True)
-    state = fields.Selection([('A','Active'),('C','Confirmed'),],string="State",help="Is the order active yet?",default='A')
+    state = fields.Selection([('A','Active'),('C','Confirmed'),],string="State",help="Is the order active yet?",default='A',store=True)
     client = fields.Char(string="Client",help="Client of the order",required=True,compute="_computeClient")
     waiter = fields.Char(string="Waiter",help="Waiter of the order",compute="_computeUser")
     price = fields.Float(string="Price €",compute="_calculatePrice")
     date = fields.Date(string="Date",required=True,default=datetime.now(),help="Date")
     lines = fields.One2many("bar_app.line_model","order_id",string="Lines of products")
     numLines = fields.Integer(string="Number of lines",help="Number of lines in this order",compute="_totalLines",store=True)
+    linesFinished = fields.Boolean(string="All the lines finished",help="Are all the lines finished?", compute="_autoConfirmed", store=True)
 
     @api.depends("lines.product_id","lines.quantity")
     def _calculatePrice(self):
@@ -59,3 +60,32 @@ class OrderModel(models.Model):
     def _computeClient(self):
         for rec in self:
             rec.client = "Mesa "+str(rec.table)
+
+    
+    @api.depends('lines.state','lines')
+    def _autoConfirmed(self):
+        #por ahora todas estan confirmaas
+        allFinished = True
+        for rec in self:
+            for line in rec.lines:
+                #cuando encuentre una linea que el estado no sea F, ponemos al boolean a false
+                if line.state == 'O' or line.state == 'D':
+                    allFinished = False
+            if allFinished == True:
+                rec.linesFinished = True
+        
+        for record in self:
+            if record.linesFinished == True:
+                record.state = 'C'
+                #CREAMOS INVOICE SOLO CON CLIENTE
+                invoice = {}
+                invoice["client"] = self.client
+                newInvoice = self.env["bar_app.invoice_model"].sudo().create(invoice)
+                #CREAMOS LINES INVOICE
+                for linea in self.lines:
+                    lineinvoice = {}
+                    lineinvoice["refId"] = newInvoice.id
+                    lineinvoice["quantity"] = linea.quantity
+                    lineinvoice["product"] = linea.product_id.id
+                    self.env["bar_app.line_invoice_model"].sudo().create(lineinvoice)
+    

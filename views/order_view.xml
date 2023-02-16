@@ -2,7 +2,7 @@
     <data>
 
         <record model="ir.ui.view" id="bar_app.order_form">
-            <field name="name">New order</field>
+            <field name="name">Order form</field>
             <field name="model">bar_app.order_model</field>
             <field name="arch" type="xml">
 
@@ -40,12 +40,12 @@
             </field>
         </record>
 
-        <record model="ir.ui.view" id="bar_app.order_model_tree">
-            <field name="name">Orders</field>
+        <record model="ir.ui.view" id="bar_app.order_tree">
+            <field name="name">Orders tree</field>
             <field name="model">bar_app.order_model</field>
             <field name="arch" type="xml">
 
-                <tree>
+                <tree decoration-success="state == 'A'">
                     <field name="table" />
                     <field name="state" />
                     <field name="lines" />
@@ -55,7 +55,7 @@
         </record>
 
         <record model="ir.ui.view" id="bar_app.order_model_kanban">
-            <field name="name">Orders</field>
+            <field name="name">Orders kanban</field>
             <field name="model">bar_app.order_model</field>
             <field name="arch" type="xml">
                 <kanban class="o_res_partner_kanban">
@@ -78,7 +78,7 @@
             </field>
         </record>
 
-        <record model="ir.ui.view" id="bar_app.order_model_calendar">
+        <record model="ir.ui.view" id="bar_app.order_calendar">
             <field name="name">Orders Calendar</field>
 
             <field name="model">bar_app.order_model</field>
@@ -109,11 +109,11 @@
             </field>
         </record>
 
-        <record model="ir.actions.act_window" id="bar_app.action_window_order_list">
-            <field name="name">Orders</field>
+        <record model="ir.actions.act_window" id="bar_app.action_window_order_list_1">
+            <field name="name">Orders list</field>
             <field name="res_model">bar_app.order_model</field>
             <field name="view_mode">tree,form,kanban,calendar,graph</field>
-            <!--<field name="domain">[('state','=','A'),('state','=','C')]</field>-->
+            <field name="domain">[('state','=','A')]</field>
         </record>
     </data>
 </odoo>
