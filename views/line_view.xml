@@ -66,7 +66,7 @@
             <field name="inherit_id" ref="bar_app.line_tree_base"/>
             <field name="arch" type="xml">
               <xpath expr="//tree" position="replace">
-                <tree decoration-success="state == 'O'">
+                <tree decoration-danger="state == 'O'">
                     <field name="fullName" />
                     <field name="quantity" />
                     <field name="observations" />
@@ -126,7 +126,7 @@
             <field name="arch" type="xml">
               <xpath expr="//form//sheet" position="before">
                 <header>
-                    <button name="drinkToDone" type="object" string="Drink doned" class="oe_highlight" confirm="Is the drink really doned?"></button>
+                    <button name="drinkToDone" type="object" string="Drink done" class="oe_highlight" confirm="Is the drink really done?"></button>
                     <field name="state" widget="statusbar"/>
                 </header>
               </xpath>     
@@ -142,7 +142,7 @@
             <field name="arch" type="xml">
               <xpath expr="//form//sheet" position="before">
                 <header>
-                    <button name="productToDone" type="object" string="Product doned" class="oe_highlight" confirm="Is the meal really doned?"></button>
+                    <button name="productToDone" type="object" string="Product done" class="oe_highlight" confirm="Is the meal really done?"></button>
                     <field name="state" widget="statusbar"/>
                 </header>
               </xpath>     

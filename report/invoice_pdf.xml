@@ -16,7 +16,8 @@
                         <th style="margin:25px;padding:25px;">BASE</th>
                         <th style="margin:25px;padding:25px;">VAT</th>
                         <th style="margin:25px;padding:25px;">TOTAL €</th>
-                        <!--<th style="margin:25px;padding:25px;">LINES</th>-->
+                        <!--<th
+                        style="margin:25px;padding:25px;">LINES</th>-->
                     </tr>
                     <t t-foreach="docs" t-as="doc">
                         <td style="border:1px solid black;margin:25px;padding:25px;">
@@ -47,13 +48,13 @@
                         <th style="margin:25px;padding:25px;">QUANTITY</th>
                     </tr>
                     <t t-foreach="docs" t-as="doc">
-                        <tr style="border:1px solid black;margin:25px;padding:25px;">
-                            <t t-foreach="doc.lines" t-as="linea">
-                                <t t-esc="linea.product.name" />
-                                <t t-esc="linea.product.price" />
-                                <t t-esc="linea.quantity" />
-                            </t>
-                        </tr>
+                        <t t-foreach="doc.lines" t-as="linea">
+                            <tr style="border:1px solid black;margin:25px;padding:25px;">
+                                <td><t t-esc="linea.product.name" /></td>
+                                <td><t t-esc="linea.product.price" /></td>
+                                <td><t t-esc="linea.quantity" /></td>
+                            </tr>
+                        </t>
                     </t>
                 </table>
 

@@ -15,7 +15,7 @@
                         <group name="father_group">
                             <group name="left_group">
                                 <h2 style="color:#ff5733;">
-                                    <field name="table"  attrs="{'readonly': [('state','=', 'C')]}"/>
+                                    Table <field name="table"  attrs="{'readonly': [('state','=', 'C')]}"/>
                                 </h2>
                                 <field name="client"  attrs="{'readonly': [('state','=', 'C')]}"/>
                                 <field name="waiter"  attrs="{'readonly': [('state','=', 'C')]}"/>
@@ -25,11 +25,13 @@
                                         <group>
                                             <field name="product_id"/>
                                             <field name="quantity"/>
+                                            <field name="observations"/>
                                         </group>
                                     </form>
-                                    <tree>
+                                    <tree decoration-warning="state == 'O'" decoration-danger="state == 'D'" decoration-success="state == 'F'">
                                         <field name="product_id" />
                                         <field name="quantity" />
+                                        <field name="state" />
                                     </tree>
                                 </field>
                                 <field name="price" readonly='True'/>
@@ -45,11 +47,12 @@
             <field name="model">bar_app.order_model</field>
             <field name="arch" type="xml">
 
-                <tree decoration-success="state == 'A'">
+                <tree decoration-danger="linesFinished == False" decoration-success="linesFinished == True">
                     <field name="table" />
-                    <field name="state" />
-                    <field name="lines" />
+                    <field name="state"/>
+                    <field name="lines"/>
                     <field name="price" />
+                    <field name="linesFinished"/>
                 </tree>
             </field>
         </record>
@@ -112,7 +115,7 @@
         <record model="ir.actions.act_window" id="bar_app.action_window_order_list_1">
             <field name="name">Orders list</field>
             <field name="res_model">bar_app.order_model</field>
-            <field name="view_mode">tree,form,kanban,calendar,graph</field>
+            <field name="view_mode">tree,form,calendar,graph,kanban</field>
             <field name="domain">[('state','=','A')]</field>
         </record>
     </data>

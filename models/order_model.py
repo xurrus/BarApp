@@ -1,5 +1,6 @@
 from odoo import models, fields,api
 from datetime import datetime
+from odoo.exceptions import ValidationError
 
 class OrderModel(models.Model):
     _name = 'bar_app.order_model'
@@ -18,7 +19,7 @@ class OrderModel(models.Model):
     date = fields.Date(string="Date",required=True,default=datetime.now(),help="Date")
     lines = fields.One2many("bar_app.line_model","order_id",string="Lines of products")
     numLines = fields.Integer(string="Number of lines",help="Number of lines in this order",compute="_totalLines",store=True)
-    linesFinished = fields.Boolean(string="All the lines finished",help="Are all the lines finished?", compute="_autoConfirmed", store=True)
+    linesFinished = fields.Boolean(string="All the lines finished",help="Are all the lines finished?", store=True, compute="_autoConfirmed")
 
     @api.depends("lines.product_id","lines.quantity")
     def _calculatePrice(self):
@@ -35,21 +36,24 @@ class OrderModel(models.Model):
         if self.state == 'C':
             self.state = 'A'
         else:
-            #CAMBIAMOS EL ESTADO
-            self.state = 'C'
-            #CREAMOS INVOICE SOLO CON CLIENTE
-            invoice = {}
-            invoice["client"] = self.client
-            newInvoice = self.env["bar_app.invoice_model"].sudo().create(invoice)
-            #CREAMOS LINES INVOICE
-            for linea in self.lines:
-                lineinvoice = {}
-                lineinvoice["refId"] = newInvoice.id
-                lineinvoice["quantity"] = linea.quantity
-                lineinvoice["product"] = linea.product_id.id
-                self.env["bar_app.line_invoice_model"].sudo().create(lineinvoice)
+            if self.linesFinished == False:
+                raise ValidationError("¡This order cannot be completed. There are still lines to finish!")
+            else:
+                #CAMBIAMOS EL ESTADO
+                self.state = 'C'
+                #CREAMOS INVOICE SOLO CON CLIENTE
+                invoice = {}
+                invoice["client"] = self.client
+                newInvoice = self.env["bar_app.invoice_model"].sudo().create(invoice)
+                #CREAMOS LINES INVOICE
+                for linea in self.lines:
+                    lineinvoice = {}
+                    lineinvoice["refId"] = newInvoice.id
+                    lineinvoice["quantity"] = linea.quantity
+                    lineinvoice["product"] = linea.product_id.id
+                    self.env["bar_app.line_invoice_model"].sudo().create(lineinvoice)
 
-            return self.state
+                return self.state
 
     @api.depends('client')
     def _computeUser(self):
@@ -61,7 +65,12 @@ class OrderModel(models.Model):
         for rec in self:
             rec.client = "Mesa "+str(rec.table)
 
-    
+    '''
+    PROVOCA QUE CUANDO TODAS LAS LINEAS ESTEN FINISHED, SE CONFIRMA Y AUTOFACTURA SOLO
+    LO HE QUITADO PORQUE SI EL WAITER ENTREGA TODOS LOS PRODUCTOS PERO LUEGO QUIERE AÑADIR OTRO PRODUCTO A LA ORDEN,
+    POR EJEMPLO UN CAFE, NO PUEDE
+    LA ORDER SOLO SE CONFIRMARA POR BOTON MANUAL
+    '''
     @api.depends('lines.state','lines')
     def _autoConfirmed(self):
         #por ahora todas estan confirmaas
@@ -71,9 +80,12 @@ class OrderModel(models.Model):
                 #cuando encuentre una linea que el estado no sea F, ponemos al boolean a false
                 if line.state == 'O' or line.state == 'D':
                     allFinished = False
+
             if allFinished == True:
                 rec.linesFinished = True
-        
+            else:
+                rec.linesFinished = False
+        '''
         for record in self:
             if record.linesFinished == True:
                 record.state = 'C'
@@ -88,4 +100,4 @@ class OrderModel(models.Model):
                     lineinvoice["quantity"] = linea.quantity
                     lineinvoice["product"] = linea.product_id.id
                     self.env["bar_app.line_invoice_model"].sudo().create(lineinvoice)
-    
+        '''
